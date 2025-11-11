@@ -47,11 +47,6 @@ public class Core : Game
     public static InputManager Input { get; private set; }
 
     /// <summary>
-    /// Gets or Sets a value that indicates if the game should exit when the esc key on the keyboard is pressed.
-    /// </summary>
-    public static bool ExitOnEscape { get; set; }
-
-    /// <summary>
     /// Set True to close the game
     /// </summary>
     public static bool exitGame { get; set; }
@@ -111,9 +106,6 @@ public class Core : Game
 
         // Mouse is visible by default.
         IsMouseVisible = true;
-
-        // Exit on escape is true by default
-        ExitOnEscape = true;
         //Intialize the randomizer, use Next(min,max) when using the randomizer
         randomizer = new Random();
     }
