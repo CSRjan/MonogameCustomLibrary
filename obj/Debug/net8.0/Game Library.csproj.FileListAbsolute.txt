@@ -10,3 +10,4 @@ C:\Users\Ryan\Desktop\Project Files\Game Library\Project1\obj\Debug\net8.0\Game 
 C:\Users\Ryan\Desktop\Project Files\Game Library\Project1\obj\Debug\net8.0\refint\Game Library.dll
 C:\Users\Ryan\Desktop\Project Files\Game Library\Project1\obj\Debug\net8.0\Game Library.pdb
 C:\Users\Ryan\Desktop\Project Files\Game Library\Project1\obj\Debug\net8.0\ref\Game Library.dll
+C:\Users\Ryan\Desktop\Project Files\Game Library\Project1\obj\Debug\net8.0\Game Library.sourcelink.json

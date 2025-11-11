@@ -63,9 +63,12 @@ public class Core : Game
     /// Gets a reference to the audio control system.
     /// </summary>
     public static AudioController Audio { get; private set; }
-
+    /// <summary>
+    /// Deltatime which is used for physics and timer calculations
+    /// </summary>
     public static float Deltatime { get; set; }
-
+    TimeSpan elapsedTime;
+    float previousCount;
     /// <summary>
     /// Creates a new Core instance.
     /// </summary>
@@ -111,10 +114,7 @@ public class Core : Game
 
         // Exit on escape is true by default
         ExitOnEscape = true;
-
-        //defaultTexture = Content.Load<Texture2D>("Art Assets\\TestImage");
-
-        Deltatime = 1f / 60f;
+        //Intialize the randomizer, use Next(min,max) when using the randomizer
         randomizer = new Random();
     }
 
@@ -145,13 +145,14 @@ public class Core : Game
 
     protected override void Update(GameTime gameTime)
     {
+        elapsedTime += gameTime.ElapsedGameTime;
         // Update the input manager.
         Input.Update(gameTime);
 
         // Update the audio controller.
         Audio.Update();
 
-        if (Input.Keyboard.WasKeyJustPressed(Keys.Escape))
+        if (Input.Keyboard.WasKeyJustPressed(Keys.Escape) && ExitOnEscape)
         {
             Exit();
         }
@@ -168,6 +169,9 @@ public class Core : Game
             s_activeScene.Update(gameTime);
         }
         base.Update(gameTime);
+        Deltatime = (float)elapsedTime.TotalSeconds - previousCount;
+        previousCount = (float)elapsedTime.TotalSeconds;
+        elapsedTime.Equals(0);
     }
 
     protected override void Draw(GameTime gameTime)
