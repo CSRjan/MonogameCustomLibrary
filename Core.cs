@@ -32,6 +32,15 @@ public class Core : Game
     public static new GraphicsDevice GraphicsDevice { get; private set; }
 
     /// <summary>
+    /// The Resolution Width of the players monitor, defaults to 1280
+    /// </summary>
+    public static int CurrentResoutionWidth { get; private set; } = 1920;
+    /// <summary>
+    /// The Resolution Height of the players monitor, defaults to 720
+    /// </summary>
+    public static int CurrentResoutionHeight { get; private set; } = 1080;
+
+    /// <summary>
     /// Gets the sprite batch used for all 2D rendering.
     /// </summary>
     public static SpriteBatch SpriteBatch { get; private set; }
@@ -49,11 +58,11 @@ public class Core : Game
     /// <summary>
     /// Set True to close the game
     /// </summary>
-    public static bool exitGame { get; set; }
+    public static bool ExitGame { get; set; }
     /// <summary>
     /// RNG, use Next(float min, float max) to get a random number
     /// </summary>
-    public static Random randomizer { get; set; }
+    public static Random Randomizer { get; set; }
     /// <summary>
     /// Gets a reference to the audio control system.
     /// </summary>
@@ -90,7 +99,6 @@ public class Core : Game
         Graphics.PreferredBackBufferWidth = width;
         Graphics.PreferredBackBufferHeight = height;
         Graphics.IsFullScreen = fullScreen;
-        
         // Apply the graphic presentation changes.
         Graphics.ApplyChanges();
 
@@ -107,7 +115,7 @@ public class Core : Game
         // Mouse is visible by default.
         IsMouseVisible = true;
         //Intialize the randomizer, use Next(min,max) when using the randomizer
-        randomizer = new Random();
+        Randomizer = new Random();
     }
 
     protected override void Initialize()
@@ -144,7 +152,7 @@ public class Core : Game
         // Update the audio controller.
         Audio.Update();
 
-        if (Input.Keyboard.WasKeyJustPressed(Keys.Escape) && ExitOnEscape)
+        if (ExitGame)
         {
             Exit();
         }
