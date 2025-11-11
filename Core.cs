@@ -73,6 +73,7 @@ public class Core : Game
     public static float Deltatime { get; set; }
     TimeSpan elapsedTime;
     float previousCount;
+    RenderTarget2D _renderTarget;
     /// <summary>
     /// Creates a new Core instance.
     /// </summary>
@@ -101,7 +102,6 @@ public class Core : Game
         Graphics.IsFullScreen = fullScreen;
         // Apply the graphic presentation changes.
         Graphics.ApplyChanges();
-
         // Set the window title.
         Window.Title = title;
 
@@ -132,6 +132,10 @@ public class Core : Game
 
         // Create a new audio controller.
         Audio = new AudioController();
+
+        //Create the RenderTarget
+        _renderTarget = new RenderTarget2D(GraphicsDevice,
+ViewportResoutionWidth, ViewportResoutionHeight);
         base.Initialize();
     }
 
@@ -176,12 +180,20 @@ public class Core : Game
 
     protected override void Draw(GameTime gameTime)
     {
+        GraphicsDevice.SetRenderTarget(_renderTarget);
+        GraphicsDevice.Clear(new Color(0, 0, 0, 255));
         // If there is an active scene, draw it.
         if (s_activeScene != null)
         {
             s_activeScene.Draw(gameTime);
         }
-
+        GraphicsDevice.SetRenderTarget(null);
+        GraphicsDevice.Clear(Color.Black);
+        SpriteBatch.Begin();
+        SpriteBatch.Draw(_renderTarget,
+            new Rectangle(0, 0, Core.GraphicsDevice.Viewport.Width, Core.GraphicsDevice.Viewport.Height),
+            Color.White);
+        SpriteBatch.End();
         base.Draw(gameTime);
     }
     public static void ChangeScene(Scene next)
