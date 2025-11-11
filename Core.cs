@@ -32,13 +32,13 @@ public class Core : Game
     public static new GraphicsDevice GraphicsDevice { get; private set; }
 
     /// <summary>
-    /// The Resolution Width of the players monitor, defaults to 1280
+    /// The Resolution Width of the players monitor, defaults to 1920
     /// </summary>
-    public static int CurrentResoutionWidth { get; private set; } = 1920;
+    public static int ViewportResoutionWidth { get; private set; } = 1920;
     /// <summary>
-    /// The Resolution Height of the players monitor, defaults to 720
+    /// The Resolution Height of the players monitor, defaults to 1080
     /// </summary>
-    public static int CurrentResoutionHeight { get; private set; } = 1080;
+    public static int ViewportResoutionHeight { get; private set; } = 1080;
 
     /// <summary>
     /// Gets the sprite batch used for all 2D rendering.
