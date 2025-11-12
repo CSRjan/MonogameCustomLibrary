@@ -78,10 +78,12 @@ public class Core : Game
     /// Creates a new Core instance.
     /// </summary>
     /// <param name="title">The title to display in the title bar of the game window.</param>
-    /// <param name="width">The initial width, in pixels, of the game window.</param>
-    /// <param name="height">The initial height, in pixels, of the game window.</param>
+    /// <param name="viewportWidth">The initial width, in pixels, of the game window.</param>
+    /// <param name="viewportHeight">The initial height, in pixels, of the game window.</param>
+    /// <param name="outputWidth">The width, in pixels, the game window will output to.</param>
+    /// <param name="outputHeight">The height, in pixels, the game window will output to.</param>
     /// <param name="fullScreen">Indicates if the game should start in fullscreen mode.</param>
-    public Core(string title, int width, int height, bool fullScreen)
+    public Core(string title, int viewportWidth, int viewportHeight, int outputWidth, int outputHeight, bool fullScreen)
     {
         // Ensure that multiple cores are not created.
         if (s_instance != null)
@@ -97,11 +99,13 @@ public class Core : Game
 
         // Set the graphics defaults.
         Graphics.HardwareModeSwitch = false;
-        Graphics.PreferredBackBufferWidth = width;
-        Graphics.PreferredBackBufferHeight = height;
+        Graphics.PreferredBackBufferWidth = outputWidth;
+        Graphics.PreferredBackBufferHeight = outputHeight;
         Graphics.IsFullScreen = fullScreen;
         // Apply the graphic presentation changes.
         Graphics.ApplyChanges();
+        ViewportResoutionWidth = viewportWidth;
+        ViewportResoutionHeight = viewportHeight;
         // Set the window title.
         Window.Title = title;
 
@@ -182,11 +186,13 @@ ViewportResoutionWidth, ViewportResoutionHeight);
     {
         GraphicsDevice.SetRenderTarget(_renderTarget);
         GraphicsDevice.Clear(new Color(0, 0, 0, 255));
+        SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
         // If there is an active scene, draw it.
         if (s_activeScene != null)
         {
             s_activeScene.Draw(gameTime);
         }
+        SpriteBatch.End();
         GraphicsDevice.SetRenderTarget(null);
         GraphicsDevice.Clear(Color.Black);
         SpriteBatch.Begin();
