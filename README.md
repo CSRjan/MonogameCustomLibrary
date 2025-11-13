@@ -22,6 +22,20 @@ In the Animation regions, there is now a looping variable in terms of looping = 
 
 In the Frame Regions, you can put the amount of frames the frame will be held on. If you are familiar with animation terms, this is a way to implement frame timings and drawing on one, two, threes.
 
+Using the animation XML seen in Monogame 2D game Tutorial, the XML will go from this
+
+<Animation name="bat-animation" delay="200">
+            <Frame region="bat-1" />
+            <Frame region="bat-2" />
+            <Frame region="bat-1" />
+            <Frame region="bat-3" />
+
+<Animation name="bat-animation" delay="200" looping="true">
+            <Frame region="bat-1" frameCount=1 />
+            <Frame region="bat-2" frameCount=1 />
+            <Frame region="bat-1" frameCount=1 />
+            <Frame region="bat-3" frameCount=1 />
+
 In the future I plan to create an XML document creator to create the files for the Monogame Animator at least somewhat faster
 
 *https://docs.monogame.net/articles/tutorials/building_2d_games/
