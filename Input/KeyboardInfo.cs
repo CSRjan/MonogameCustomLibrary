@@ -67,6 +67,15 @@ namespace Game_Library.Input
         {
             return CurrentState.IsKeyUp(key) && PreviousState.IsKeyDown(key);
         }
+        /// <summary>
+        /// Returns a value that indicates if the specified key has been held down for at most 2 frames
+        /// </summary>
+        /// <param name="key">The key to check.</param>
+        /// <returns>true if the specified key has been held for at least two frames; otherwise, false.</returns>
+        public bool IsKeyHeldDown(Keys key)
+        {
+            return CurrentState.IsKeyDown(key) && PreviousState.IsKeyDown(key);
+        }
 
 
     }

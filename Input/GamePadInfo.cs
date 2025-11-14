@@ -105,6 +105,15 @@ namespace Game_Library.Input
             return CurrentState.IsButtonUp(button) && PreviousState.IsButtonDown(button);
         }
         /// <summary>
+        /// Returns a value that indicates if the specified button has been held down for at most 2 frames
+        /// </summary>
+        /// <param name="button">The button to check.</param>
+        /// <returns>true if the specified button has been held for at least two frames; otherwise, false.</returns>
+        public bool IsButtonHeldDown(Buttons button)
+        {
+            return CurrentState.IsButtonDown(button) && PreviousState.IsButtonDown(button);
+        }
+        /// <summary>
         /// Sets the vibration for all motors of this gamepad.
         /// </summary>
         /// <param name="strength">The strength of the vibration from 0.0f (none) to 1.0f (full).</param>

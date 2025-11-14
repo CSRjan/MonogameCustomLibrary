@@ -177,6 +177,30 @@ namespace Game_Library.Input
                     return false;
             }
         }
+
+        /// <summary>
+        /// Returns a value that indicates if the specified mouse button has been held down for at most 2 frames
+        /// </summary>
+        /// <param name="button">The mouse button to check.</param>
+        /// <returns>true if the specified mouse button has been held for at least two frames; otherwise, false.</returns>
+        public bool IsKeyHeldDown(MouseButton button)
+        {
+            switch (button)
+            {
+                case MouseButton.Left:
+                    return CurrentState.LeftButton == ButtonState.Pressed && PreviousState.LeftButton == ButtonState.Pressed;
+                case MouseButton.Middle:
+                    return CurrentState.MiddleButton == ButtonState.Pressed && PreviousState.MiddleButton == ButtonState.Pressed;
+                case MouseButton.Right:
+                    return CurrentState.RightButton == ButtonState.Pressed && PreviousState.RightButton == ButtonState.Pressed;
+                case MouseButton.XButton1:
+                    return CurrentState.XButton1 == ButtonState.Pressed && PreviousState.XButton1 == ButtonState.Pressed;
+                case MouseButton.XButton2:
+                    return CurrentState.XButton2 == ButtonState.Pressed && PreviousState.XButton2 == ButtonState.Pressed;
+                default:
+                    return false;
+            }
+        }
         /// <summary>
         /// Sets the current position of the mouse cursor in screen space and updates the CurrentState with the new position.
         /// </summary>
