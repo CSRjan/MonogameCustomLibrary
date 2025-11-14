@@ -72,6 +72,10 @@ public class Core : Game
     /// </summary>
     public static AudioController Audio { get; private set; }
     /// <summary>
+    /// Gets a reference to the Save Manager System
+    /// </summary>
+    public static SaveManager SaveManager { get; private set; }
+    /// <summary>
     /// Deltatime which is used for physics and timer calculations
     /// </summary>
     public static float Deltatime { get; set; }
@@ -142,7 +146,10 @@ public class Core : Game
 
         // Create a new audio controller.
         Audio = new AudioController();
-
+        //Create a new save manager
+        SaveManager = new SaveManager();
+        //Load the Save Data
+        SaveManager.LoadData();
         //Create the RenderTarget
         _renderTarget = new RenderTarget2D(GraphicsDevice,
 ViewportResoutionWidth, ViewportResoutionHeight);

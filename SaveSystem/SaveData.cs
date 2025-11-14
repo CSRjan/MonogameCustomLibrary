@@ -1,0 +1,14 @@
+﻿using System;
+using System.Text.Json;
+[System.Serializable]
+public class SaveData
+{
+    //Put variables here, make sure your variables are public and with { get; set;} otherwise it won't save
+    /// <summary>
+    /// Put the "New Game" variable values here
+    /// </summary>
+    public SaveData()
+    {
+       
+    }
+}
