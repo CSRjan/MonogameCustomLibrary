@@ -60,6 +60,10 @@ public class Core : Game
     /// </summary>
     public static bool ExitGame { get; set; }
     /// <summary>
+    /// Set True to close the game
+    /// </summary>
+    public static bool PauseOnUnfocus { get; set; }
+    /// <summary>
     /// RNG, use Next(float min, float max) to get a random number
     /// </summary>
     public static Random Randomizer { get; set; }
@@ -83,7 +87,8 @@ public class Core : Game
     /// <param name="outputWidth">The width, in pixels, the game window will output to.</param>
     /// <param name="outputHeight">The height, in pixels, the game window will output to.</param>
     /// <param name="fullScreen">Indicates if the game should start in fullscreen mode.</param>
-    public Core(string title, int viewportWidth, int viewportHeight, int outputWidth, int outputHeight, bool fullScreen)
+    /// <param name="pauseOnUF">Indicates if the game should pause when not focused.</param>
+    public Core(string title, int viewportWidth, int viewportHeight, int outputWidth, int outputHeight, bool fullScreen, bool pauseOnUF)
     {
         // Ensure that multiple cores are not created.
         if (s_instance != null)
@@ -109,6 +114,7 @@ public class Core : Game
         // Set the window title.
         Window.Title = title;
 
+        PauseOnUnfocus = pauseOnUF;
         // Set the core's content manager to a reference of the base Game's
         // content manager.
         Content = base.Content;
@@ -170,9 +176,16 @@ ViewportResoutionWidth, ViewportResoutionHeight);
         {
             TransitionScene();
         }
-
+        if (PauseOnUnfocus)
+        {
+            s_activeScene.unFocused(this.IsActive);
+        }
+        else
+        {
+            
+        }
         // If there is an active scene, update it.
-        if (s_activeScene != null)
+        if (s_activeScene != null && s_activeScene.IsUnfocused)
         {
             s_activeScene.Update(gameTime);
         }

@@ -19,6 +19,10 @@ namespace Game_Library.Scenes
         /// </summary>
         public bool IsDisposed { get; private set; }
         /// <summary>
+        /// Gets a value that indicates if the gamewindow is unfocused.
+        /// </summary>
+        public bool IsUnfocused { get; private set; } = true;
+        /// <summary>
         /// Creates a new scene instance.
         /// </summary>
         /// <summary>
@@ -83,7 +87,14 @@ namespace Game_Library.Scenes
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-
+        /// <summary>
+        /// !!DO NOT USE!! Assigns the Scene's bool to check if the game window is unfocused, which can allow for a pause game on unfocused
+        /// </summary>
+        /// <param name="isActiveBool"></param>
+        public void unFocused(bool isActiveBool)
+        {
+            IsUnfocused = isActiveBool;
+        }
         /// <summary>
         /// Disposes of this scene.
         /// </summary>
