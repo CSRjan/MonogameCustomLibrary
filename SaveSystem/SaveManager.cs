@@ -7,6 +7,7 @@ public class SaveManager
     public FileSettings fs = new FileSettings();
     string savePath = "C:\\Users\\" + Environment.UserName + "\\Documents\\Save Data\\SaveFile.json";
     string settingPath = "C:\\Users\\" + Environment.UserName + "\\Documents\\Save Data\\GameSettings.json";
+    public bool filesFreshlyCreated = false;
     public static SaveManager instance { get; private set; }
     /// <summary>
     /// Checks if a save manager is already instantiated
@@ -51,6 +52,7 @@ public class SaveManager
             myFile2.Close();
             sd = new SaveData();
             fs = new FileSettings();
+            filesFreshlyCreated = true;
             Save();
         }
     }
@@ -75,7 +77,6 @@ public class SaveManager
     public void Clear()
     {
         File.Delete(savePath);
-        File.Delete(settingPath);
         LoadData();
     }
 

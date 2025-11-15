@@ -21,7 +21,7 @@ namespace Game_Library.Scenes
         /// <summary>
         /// Gets a value that indicates if the gamewindow is unfocused.
         /// </summary>
-        public bool IsUnfocused { get; private set; } = true;
+        public bool IsFocused { get; private set; } = true;
         /// <summary>
         /// Creates a new scene instance.
         /// </summary>
@@ -93,7 +93,7 @@ namespace Game_Library.Scenes
         /// <param name="isActiveBool"></param>
         public void unFocused(bool isActiveBool)
         {
-            IsUnfocused = isActiveBool;
+            IsFocused = isActiveBool;
         }
         /// <summary>
         /// Disposes of this scene.

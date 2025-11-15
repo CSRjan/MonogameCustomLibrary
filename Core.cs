@@ -88,11 +88,8 @@ public class Core : Game
     /// <param name="title">The title to display in the title bar of the game window.</param>
     /// <param name="viewportWidth">The initial width, in pixels, of the game window.</param>
     /// <param name="viewportHeight">The initial height, in pixels, of the game window.</param>
-    /// <param name="outputWidth">The width, in pixels, the game window will output to.</param>
-    /// <param name="outputHeight">The height, in pixels, the game window will output to.</param>
     /// <param name="fullScreen">Indicates if the game should start in fullscreen mode.</param>
-    /// <param name="pauseOnUF">Indicates if the game should pause when not focused.</param>
-    public Core(string title, int viewportWidth, int viewportHeight, int outputWidth, int outputHeight, bool fullScreen, bool pauseOnUF)
+    public Core(string title, int viewportWidth, int viewportHeight,bool fullScreen)
     {
         // Ensure that multiple cores are not created.
         if (s_instance != null)
@@ -108,8 +105,6 @@ public class Core : Game
 
         // Set the graphics defaults.
         Graphics.HardwareModeSwitch = false;
-        Graphics.PreferredBackBufferWidth = outputWidth;
-        Graphics.PreferredBackBufferHeight = outputHeight;
         Graphics.IsFullScreen = fullScreen;
         // Apply the graphic presentation changes.
         Graphics.ApplyChanges();
@@ -117,8 +112,6 @@ public class Core : Game
         ViewportResoutionHeight = viewportHeight;
         // Set the window title.
         Window.Title = title;
-
-        PauseOnUnfocus = pauseOnUF;
         // Set the core's content manager to a reference of the base Game's
         // content manager.
         Content = base.Content;
@@ -150,9 +143,37 @@ public class Core : Game
         SaveManager = new SaveManager();
         //Load the Save Data
         SaveManager.LoadData();
+        //Check if the resolution file was just created
+        if (SaveManager.instance.filesFreshlyCreated)
+        {
+            //Assign monitor width to width of the Window
+            Graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            //Assign monitor height to height of the Window
+            Graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            //Assign Width of the Window to Game Settings
+            SaveManager.instance.fs.windowResolutionWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            //Assign Height of the Window to Game Settings
+            SaveManager.instance.fs.windowResolutionHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            //Save Changes
+            SaveManager.Save();
+        }
+        else
+        {
+            //Assign width in File Settings to width of the Window
+            Graphics.PreferredBackBufferWidth = SaveManager.instance.fs.windowResolutionWidth;
+            //Assign height in File Settings to height of the Window
+            Graphics.PreferredBackBufferHeight = SaveManager.instance.fs.windowResolutionHeight;
+            //Assign pauseOnUF in File Settings to PauseOnUnfocus
+            PauseOnUnfocus = SaveManager.instance.fs.pauseOnUF;
+        }
+        //Assign PauseOnUnfocus Setting value to PauseOnUnfocus
+        PauseOnUnfocus = SaveManager.instance.fs.pauseOnUF;
+        //Assign isFullscreen Setting value to Graphics.isFullscreen
+        Graphics.IsFullScreen = SaveManager.instance.fs.isFullscreen;
+        //Assign the graphics settings
+        Graphics.ApplyChanges();
         //Create the RenderTarget
-        _renderTarget = new RenderTarget2D(GraphicsDevice,
-ViewportResoutionWidth, ViewportResoutionHeight);
+        _renderTarget = new RenderTarget2D(GraphicsDevice, ViewportResoutionWidth, ViewportResoutionHeight);
         base.Initialize();
     }
 
@@ -172,7 +193,7 @@ ViewportResoutionWidth, ViewportResoutionHeight);
 
         // Update the audio controller.
         Audio.Update();
-
+        //Check if the game has been set to closed
         if (ExitGame)
         {
             Exit();
@@ -183,42 +204,57 @@ ViewportResoutionWidth, ViewportResoutionHeight);
         {
             TransitionScene();
         }
+        //Check if the game was intilized w
         if (PauseOnUnfocus)
         {
+            //Set the IsUnfocused variable of the 
             s_activeScene.unFocused(this.IsActive);
         }
         else
         {
             
         }
-        // If there is an active scene, update it.
-        if (s_activeScene != null && s_activeScene.IsUnfocused)
+        // If there is an active scene and the game is focused on, update it.
+        if (s_activeScene != null && s_activeScene.IsFocused)
         {
+            //The active scene's update loop
             s_activeScene.Update(gameTime);
         }
         base.Update(gameTime);
+        //Deltatime Formula calculation = Current Time(Delta 2)-Time at the start of the update loop(Delta 1)
         Deltatime = (float)elapsedTime.TotalSeconds - previousCount;
+        //Assign Delta 1 the value of delta 2
         previousCount = (float)elapsedTime.TotalSeconds;
+        //Set Delta 2 to Zero to restart the calculation
         elapsedTime.Equals(0);
     }
 
     protected override void Draw(GameTime gameTime)
     {
+        //Assign the rendering of sprites and calculations to the Viewport
         GraphicsDevice.SetRenderTarget(_renderTarget);
-        GraphicsDevice.Clear(new Color(0, 0, 0, 255));
+        //Clear all sprites out the Viewport's spritebatch and set it to Cornflower Blue
+        GraphicsDevice.Clear(Color.CornflowerBlue);
+        //Begin rendering to spritebatch
         SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
         // If there is an active scene, draw it.
         if (s_activeScene != null)
         {
             s_activeScene.Draw(gameTime);
         }
+        //End rendering to spritebatch
         SpriteBatch.End();
+        //Assign the rendering of sprites and calculations to the graphic device itself
         GraphicsDevice.SetRenderTarget(null);
-        GraphicsDevice.Clear(Color.Black);
+        //Clear all sprites out the graphic device's spritebatch and set it to Cornflower Blue
+        GraphicsDevice.Clear(Color.CornflowerBlue);
+        //Begin rendering to spritebatch
         SpriteBatch.Begin();
+        //Draw the graphical data of the render target to the graphic device
         SpriteBatch.Draw(_renderTarget,
             new Rectangle(0, 0, Core.GraphicsDevice.Viewport.Width, Core.GraphicsDevice.Viewport.Height),
             Color.White);
+        //End rendering to spritebatch
         SpriteBatch.End();
         base.Draw(gameTime);
     }
