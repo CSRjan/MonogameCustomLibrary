@@ -4,7 +4,7 @@ using System.Text.Json;
 public class SaveData
 {
     //Put variables here, make sure your variables are public and with { get; set;} otherwise it won't save
-    public int highScore;
+    public int highScore { get; set; }
     /// <summary>
     /// Put the "New Game" variable values here
     /// </summary>
