@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 
 namespace Game_Library;
 
@@ -63,6 +64,10 @@ public class Core : Game
     /// Set True to close the game
     /// </summary>
     public static bool PauseOnUnfocus { get; set; }
+    /// <summary>
+    /// FPS
+    /// </summary>
+    public static int frameRate { get; set; }
     /// <summary>
     /// RNG, use Next(float min, float max) to get a random number
     /// </summary>
@@ -165,9 +170,13 @@ public class Core : Game
             Graphics.PreferredBackBufferHeight = SaveManager.instance.fs.windowResolutionHeight;
             //Assign pauseOnUF in File Settings to PauseOnUnfocus
             PauseOnUnfocus = SaveManager.instance.fs.pauseOnUF;
+            //Assign framerate in File Settings to frameRate
+            frameRate = SaveManager.instance.fs.framerate;
         }
         //Assign PauseOnUnfocus Setting value to PauseOnUnfocus
         PauseOnUnfocus = SaveManager.instance.fs.pauseOnUF;
+        //Assign frameRate Setting value to TargetElapsedTime
+        TargetElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / frameRate);
         //Assign isFullscreen Setting value to Graphics.isFullscreen
         Graphics.IsFullScreen = SaveManager.instance.fs.isFullscreen;
         //Assign the graphics settings
@@ -292,6 +301,19 @@ public class Core : Game
         {
             s_activeScene.Initialize();
         }
+    }
+
+    public static List<T> FisherYatesShuffle<T>(List<T> data)
+    {
+        List<T> newVal = new List<T>();
+        int dataCap = data.Count - 1;
+        for (int i = dataCap; i < 0; i--)
+        {
+            int im = Core.Randomizer.Next(0, i);
+            newVal.Add(data[im]);
+            data.RemoveAt(im);
+        }
+        return newVal;
     }
 }
 

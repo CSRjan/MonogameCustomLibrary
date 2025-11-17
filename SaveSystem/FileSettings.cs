@@ -23,12 +23,17 @@ public class FileSettings
     /// </summary>
     public bool isFullscreen { get; set; }
     /// <summary>
+    /// The float containing the game's FPS
+    /// </summary>
+    public int framerate { get; set; }
+    /// <summary>
     /// Put the "New Game" variable values here
     /// </summary>
     public FileSettings()
     {
         pauseOnUF = true;
         isFullscreen = true;
+        framerate = 60;
     }
 
 }
