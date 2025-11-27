@@ -5,8 +5,8 @@ public class SaveManager
 {
     public SaveData sd = new SaveData();
     public FileSettings fs = new FileSettings();
-    string savePath = "C:\\Users\\" + Environment.UserName + "\\Documents\\Save Data\\SaveFile.json";
-    string settingPath = "C:\\Users\\" + Environment.UserName + "\\Documents\\Save Data\\GameSettings.json";
+    string savePath = Path.Combine(Directory.GetCurrentDirectory(),"Save Data","SaveFile.json");
+    string settingPath = Path.Combine(Directory.GetCurrentDirectory(), "Save Data", "GameSettings.json");
     public bool filesFreshlyCreated = false;
     public static SaveManager instance { get; private set; }
     /// <summary>

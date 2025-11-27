@@ -6,6 +6,7 @@ C:\Users\Ryan\Desktop\Project Files\Game Library\Project1\obj\Release\net8.0\Gam
 C:\Users\Ryan\Desktop\Project Files\Game Library\Project1\obj\Release\net8.0\Game Library.AssemblyInfoInputs.cache
 C:\Users\Ryan\Desktop\Project Files\Game Library\Project1\obj\Release\net8.0\Game Library.AssemblyInfo.cs
 C:\Users\Ryan\Desktop\Project Files\Game Library\Project1\obj\Release\net8.0\Game Library.csproj.CoreCompileInputs.cache
+C:\Users\Ryan\Desktop\Project Files\Game Library\Project1\obj\Release\net8.0\Game Library.sourcelink.json
 C:\Users\Ryan\Desktop\Project Files\Game Library\Project1\obj\Release\net8.0\Game Library.dll
 C:\Users\Ryan\Desktop\Project Files\Game Library\Project1\obj\Release\net8.0\refint\Game Library.dll
 C:\Users\Ryan\Desktop\Project Files\Game Library\Project1\obj\Release\net8.0\Game Library.pdb

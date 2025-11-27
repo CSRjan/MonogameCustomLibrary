@@ -125,7 +125,7 @@ public class Core : Game
         Content.RootDirectory = "Content";
 
         // Mouse is visible by default.
-        IsMouseVisible = true;
+        IsMouseVisible = false;
         //Intialize the randomizer, use Next(min,max) when using the randomizer
         Randomizer = new Random();
     }
@@ -159,6 +159,7 @@ public class Core : Game
             SaveManager.instance.fs.windowResolutionWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             //Assign Height of the Window to Game Settings
             SaveManager.instance.fs.windowResolutionHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            frameRate = SaveManager.instance.fs.framerate;
             //Save Changes
             SaveManager.Save();
         }

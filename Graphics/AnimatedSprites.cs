@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Game_Library.Graphics
 {
@@ -83,7 +84,6 @@ namespace Game_Library.Graphics
                         }
                     }
                 }
-
                 Region = _animation.Frames[_currentFrame];
             }
         }

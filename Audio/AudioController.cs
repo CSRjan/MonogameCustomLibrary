@@ -153,6 +153,36 @@ namespace Game_Library.Audio
         }
 
         /// <summary>
+        /// Plays the given sound effect with randomized pitch shifting.
+        /// </summary>
+        /// <param name="soundEffect">The sound effect to play.</param>
+        /// <param name="volume">The volume, ranging from 0.0 (silence) to 1.0 (full volume).</param>
+        /// <param name="pitch">The pitch adjustment, ranging from -1.0 (down an octave) to 0.0 (no change) to 1.0 (up an octave).</param>
+        /// <param name="pan">The panning, ranging from -1.0 (left speaker) to 0.0 (centered), 1.0 (right speaker).</param>
+        /// <param name="isLooped">Whether the the sound effect should loop after playback.</param>
+        /// <returns>The sound effect instance created by playing the sound effect.</returns>
+        /// <returns>The sound effect instance created by this method.</returns>
+        public SoundEffectInstance PlaySoundEffectPS(SoundEffect soundEffect, float volume, float pitch, float pan, bool isLooped)
+        {
+            // Create an instance from the sound effect given.
+            SoundEffectInstance soundEffectInstance = soundEffect.CreateInstance();
+
+            // Apply the volume, pitch, pan, and loop values specified.
+            soundEffectInstance.Volume = volume;
+            soundEffectInstance.Pitch = Core.Randomizer.Next(3, 9)/10;
+            soundEffectInstance.Pan = pan;
+            soundEffectInstance.IsLooped = isLooped;
+
+            // Tell the instance to play
+            soundEffectInstance.Play();
+
+            // Add it to the active instances for tracking
+            _activeSoundEffectInstances.Add(soundEffectInstance);
+
+            return soundEffectInstance;
+        }
+
+        /// <summary>
         /// Plays the given song.
         /// </summary>
         /// <param name="song">The song to play.</param>
